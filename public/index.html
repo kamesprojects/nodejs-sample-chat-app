@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Socket.IO Test</title>
+</head>
+<body>
+    <h1>Môj Testovací Chat</h1>
+    <input type="text" id="spravaInput" placeholder="Napíš niečo...">
+    <button onclick="odoslat()">Odoslať</button>
+
+    <ul id="zoznamSprav"></ul>
+
+    <!-- Načítanie Socket.IO klienta z nášho servera -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io(); // Automaticky sa pripojí na rovnaký port (3000)
+
+        // Priamočiare odoslanie správy na backend
+        function odoslat() {
+            const input = document.getElementById('spravaInput');
+            socket.emit('chat-sent', input.value);
+            input.value = '';
+        }
+
+        // Chytanie správ, ktoré nám poslal backend
+        socket.on('chat-received', (data) => {
+            const li = document.createElement('li');
+            li.textContent = data;
+            document.getElementById('zoznamSprav').appendChild(li);
+        });
+    </script>
+</body>
+</html>
