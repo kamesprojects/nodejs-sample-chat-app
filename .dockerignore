@@ -6,4 +6,4 @@ Dockerfile
 .gitignore
 .env
 README.md
-swagger-output.json
+# (swagger-output.json removed so the file is copied into the image)

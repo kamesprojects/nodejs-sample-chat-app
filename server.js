@@ -3,45 +3,26 @@ import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import http from "http";
-import { Server } from "socket.io";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger-output.json" with { type: "json" };
 import {resolve} from "path";
-import { PORT, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from "./utils/config";
-import pgPromise from 'pg-promise';
+import { PORT } from "./config/env.js";
+
+import v1UserRoutes from "./routes/v1/users.js";
+import { errorHandler } from "./middleware/errorMiddleware.js";
+import { AppError } from "./utils/errorHandler.js";
+import { Server } from "socket.io";
+import v1AuthRouter from "./routes/v1/auth.js";
+import v1ChatRouter from "./routes/rooms.js";
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+
 const publicPath = resolve(process.cwd(), 'public');
-const port = PORT ? PORT : 3001;
-const pgp = pgPromise();
-const connectionString = {
-  host: 'localhost',
-  port: DB_PORT,
-  database: DB_NAME,
-  user: DB_USER,
-  password: DB_PASSWORD
-}
-const db = pgp(connectionString);
+const port = PORT ? PORT : 3000;
 
 app.disable("x-powered-by");
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(
-  cors({
-    origin: [`http://localhost:${port}`],
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-    exposedHeaders: ["Authorization"],
-  })
-);
-
-app.use(morgan("dev"));
-// app.use(helmet());
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -55,6 +36,21 @@ app.use(
   })
 );
 
+app.use(
+  cors({
+    origin: [`http://localhost:${port}`],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+    exposedHeaders: ["Authorization"],
+  })
+);
+
+app.use(morgan("dev"));
+app.use(compression());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(publicPath));
 
 app.get("/", (req, res) => {
@@ -68,39 +64,19 @@ app.get("/health", (req, res) => {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Socket.IO connection handler
-io.on('connection', (socket) => {
-  console.log(`A User connected`);
+app.use("/api/v1/auth", v1AuthRouter);
+app.use("/api/v1/users", v1UserRoutes);
+app.use("/api/v1/messages", v1MessagesRouter);
+app.use("/api/v1/rooms", v1ChatRouter);
 
-  socket.on('chat-sent', async (msg) => {
-    console.log(`Chat message received: ${msg}`);
 
-    try {
-      await db.none('INSERT INTO messages(content) VALUES($1)', [msg]);
-      
-      // Broadcast the message to all connected clients
-      io.emit('chat-received', msg);
-    } catch (error) {
-      console.error('Error inserting message:', error);
-    }
-    
-  });
 
-   // Handle disconnection
-  socket.on('disconnect', () => {
-    console.log(`A User disconnected`);
-  });
+app.use((req, res, next) => {
+  next(new AppError(404, "Route Not Found"));
 });
+
+app.use(errorHandler);
 
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
-});
-
-app.use((req, res) => {
-  res.status(404).json({ error: "Not Found" });
-});
-
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).json({ error: "Internal Server Error" });
 });

@@ -1,23 +1,33 @@
-version: '3.8'
-
 services:
   node-server:
+    image: chat-app/node-server:dev
     build: .
-    ports: 
-      - 3000:3000
+    environment:
+      - NODE_PORT=${NODE_PORT}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    
+    command: npm run start
     volumes: 
-      - ./server.js:/app/server.js
+      - ./:/app
+      - /app/node_modules
+    ports: 
+      - ${NODE_PORT}:3000
   postgres-db:
-    image: postgres:latest
+    image: postgres:17
     container_name: my_postgres_container_name
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
     ports:
-      - "5431:5432"
+      - "${DB_PORT}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_v2:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d
-  volumes:
-    postgres_data:
+
+volumes:
+  postgres_data_v2:
