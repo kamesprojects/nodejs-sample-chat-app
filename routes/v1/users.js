@@ -5,6 +5,7 @@ import {
   createUser,
   updateUser,
   deleteUser,
+  getUserProfile,
 } from "../../controllers/userController.js";
 import { authenticateToken, requireRole } from "../../middleware/auth.js";
 
@@ -17,7 +18,7 @@ router.post("/", authenticateToken, requireRole("admin"), createUser);
 
 // Additional route for user profile
 router.get("/profile", authenticateToken, getUserProfile);
-router.put("/:id", authenticateToken, updateUser);
+router.patch("/:id", authenticateToken, updateUser);
 router.delete("/:id", authenticateToken, deleteUser);
 
 export default router;

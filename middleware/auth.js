@@ -5,13 +5,14 @@ import { JWT_SECRET } from "../config/env.js";
 import { AppError } from "../utils/errorHandler.js";
 
 export const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  // const authHeader = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return next(new AppError("Unauthorized: No token provided", 401));
-  }
+  // if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  //   return next(new AppError("Unauthorized: No token provided", 401));
+  // }
 
-  const token = authHeader.split(" ")[1];
+  // const token = authHeader.split(" ")[1];
+  const token = req.cookies.token;
 
   if (!token) {
     return next(new AppError("Unauthorized: No token provided", 401));

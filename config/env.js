@@ -12,6 +12,8 @@ export const DB_URL =
   process.env.DB_URL ||
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
+export const CORS_ORIGIN = process.env.CORS_ORIGIN || `http://localhost:${PORT}`;
+
 export const JWT_SECRET = process.env.JWT_SECRET;
 export const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1h";
 export const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS) || 10;

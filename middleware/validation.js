@@ -1,4 +1,4 @@
-import { AppError } from "../utils/errorHandler";
+import { AppError } from "../utils/errorHandler.js";
 
 export const validate = (schema) => (req, res, next) => {
   const result = schema.safeParse(req.body);

@@ -32,9 +32,9 @@ export const findByEmail = async (email) => {
 export const findById = async (userId) => {
   return db.oneOrNone(
     `
-      SELECT id, email, password_hash, display_name, role, created_at
-      FROM users
-      WHERE id = $1
+      SELECT u.id, u.email, u.display_name, u.role, u.created_at
+      FROM users u
+      WHERE u.id = $1
     `,
     [userId],
   );
