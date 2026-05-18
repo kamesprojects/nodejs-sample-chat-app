@@ -55,6 +55,7 @@ export const updateRoomMessageById = async (messageId, userId, body) => {
       UPDATE messages
       SET body = $1, edited_at = NOW()
       WHERE id = $2 AND sender_id = $3
+      RETURNING id, room_id, sender_id, body, created_at, edited_at
     `,
     [body, messageId, userId],
   );

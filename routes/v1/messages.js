@@ -13,7 +13,7 @@ import {
 } from "../../schemas/messageSchema.js";
 import { validate } from "../../middleware/validation.js";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.get("/", authenticateToken, listRoomMessages);
 router.get("/:messageId", authenticateToken, getMessageByRoomId);

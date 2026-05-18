@@ -36,10 +36,10 @@ export const getUserProfile = async (req, res, next) => {
       return next(new AppError(404, "User not found"));
     }
 
-    sendSuccess(res, { user, rooms });
+    sendSuccess(res, 200, { user, rooms });
   } catch (err) {
     console.error("getUserProfile error:", err);
-    next(new AppError(500, "Internal server error"));
+    next(err);
   }
 };
 

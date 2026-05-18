@@ -8,13 +8,14 @@ import {
   listRoomMembers,
   getRoomMemberById,
   addRoomMember,
+  addRoomMemberByEmail,
   updateRoomMemberRole,
   deleteRoomMember,
 } from "../../controllers/roomController.js";
 import v1MessagesRouter from "../../routes/v1/messages.js";
 import { authenticateToken } from "../../middleware/auth.js";
 import { validate } from "../../middleware/validation.js";
-import { createRoomSchema, addRoomMemberSchema, updateRoomSchema, updateRoomMemberRoleSchema } from "../../schemas/roomSchema.js";
+import { createRoomSchema, addRoomMemberSchema, addRoomMemberByEmailSchema, updateRoomSchema, updateRoomMemberRoleSchema } from "../../schemas/roomSchema.js";
 
 const router = express.Router();
 // ------------------------------
@@ -31,6 +32,7 @@ router.delete("/:roomId", authenticateToken, deleteRoom);
 // ------------------------------
 
 router.get("/:roomId/members", authenticateToken, listRoomMembers);
+router.post("/:roomId/members/email", authenticateToken, validate(addRoomMemberByEmailSchema), addRoomMemberByEmail);
 router.get("/:roomId/members/:memberId", authenticateToken, getRoomMemberById);
 router.post("/:roomId/members", authenticateToken, validate(addRoomMemberSchema), addRoomMember);
 router.patch("/:roomId/members/:memberId", authenticateToken, validate(updateRoomMemberRoleSchema), updateRoomMemberRole);

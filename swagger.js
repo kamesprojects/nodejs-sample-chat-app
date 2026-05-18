@@ -1,5 +1,5 @@
 import swaggerAutogen from 'swagger-autogen';
-import { PORT } from "./utils/config.js"
+import { PORT } from "./config/env.js";
 const doc = {
   info: {
     title: 'Nodejs Sample Chat App',

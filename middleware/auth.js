@@ -15,7 +15,7 @@ export const authenticateToken = (req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
-    return next(new AppError("Unauthorized: No token provided", 401));
+    return next(new AppError(401, "Unauthorized: No token provided"));
   }
 
   try {
@@ -25,7 +25,7 @@ export const authenticateToken = (req, res, next) => {
 
     next();
   } catch (err) {
-    return next(new AppError("Unauthorized: Invalid token", 401));
+    return next(new AppError(401, "Unauthorized: Invalid token"));
   }
 };
 
@@ -34,7 +34,7 @@ export function requireRole(role) {
     if (req.user && req.user.role === role) {
       next();
     } else {
-      return next(new AppError("Unauthorized: Insufficient permissions", 401));
+      return next(new AppError(401, "Unauthorized: Insufficient permissions"));
     }
   };
 }
@@ -42,7 +42,7 @@ export function requireRole(role) {
 export function ensureUserAccess(id) {
   return (req, res, next) => {
     if (!req.user) {
-      return next(new AppError("Unauthorized: No user information", 401));
+      return next(new AppError(401, "Unauthorized: No user information"));
     }
 
     if (req.user.role === "admin") {
@@ -50,7 +50,7 @@ export function ensureUserAccess(id) {
     }
 
     if (req.user.id !== id) {
-      return next(new AppError("Unauthorized: Insufficient permissions", 401));
+      return next(new AppError(401, "Unauthorized: Insufficient permissions"));
     }
 
     next();

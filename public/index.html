@@ -14,7 +14,7 @@
 
             <!-- Login Form -->
             <div id="loginForm" class="space-y-4">
-                <h2 class="text-xl font-semibold text-gray-700 mb-6">Prihlásenie</h2>
+                <h2 class="text-xl font-semibold text-gray-700 mb-6">Login</h2>
                 <input 
                     type="email" 
                     id="loginEmail" 
@@ -31,7 +31,7 @@
                     onclick="handleLogin()" 
                     class="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
                 >
-                    Prihlásiť sa
+                    Log in
                 </button>
                 <div style="margin-top:8px; display:flex; gap:8px; justify-content:center;">
                     <button type="button" onclick="fillTestUser('user1@test.sk','testuser1')" style="padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; background:#f8fafc; cursor:pointer">Test1</button>
@@ -39,16 +39,16 @@
                     <button type="button" onclick="fillTestUser('user3@test.sk','testuser3')" style="padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; background:#f8fafc; cursor:pointer">Test3</button>
                 </div>
                 <p class="text-center text-gray-600">
-                    Nemáš účet? 
+                    Don't have an account? 
                     <button onclick="switchToRegister()" class="text-blue-500 font-semibold hover:underline">
-                        Registrovať sa
+                        Register
                     </button>
                 </p>
             </div>
 
             <!-- Register Form -->
             <div id="registerForm" class="space-y-4 hidden">
-                <h2 class="text-xl font-semibold text-gray-700 mb-6">Registrácia</h2>
+                <h2 class="text-xl font-semibold text-gray-700 mb-6">Register</h2>
                 <input 
                     type="email" 
                     id="registerEmail" 
@@ -58,25 +58,30 @@
                 <input 
                     type="text" 
                     id="registerDisplayName" 
-                    placeholder="Prezývka" 
+                    placeholder="Display Name" 
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                 <input 
                     type="password" 
                     id="registerPassword" 
-                    placeholder="Heslo" 
+                    placeholder="Password" 
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                 <button 
                     onclick="handleRegister()" 
                     class="w-full bg-purple-500 text-white py-2 rounded-lg font-semibold hover:bg-purple-600 transition"
                 >
-                    Registrovať sa
+                    Register
                 </button>
+                <div style="margin-top:8px; display:flex; gap:8px; justify-content:center;">
+                    <button type="button" onclick="fillTestRegister('user1@test.sk','user1','testuser1')" style="padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; background:#f8fafc; cursor:pointer">Test1</button>
+                    <button type="button" onclick="fillTestRegister('user2@test.sk','user2','testuser2')" style="padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; background:#f8fafc; cursor:pointer">Test2</button>
+                    <button type="button" onclick="fillTestRegister('user3@test.sk','user3','testuser3')" style="padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; background:#f8fafc; cursor:pointer">Test3</button>
+                </div>
                 <p class="text-center text-gray-600">
-                    Máš účet? 
+                    Already have an account? 
                     <button onclick="switchToLogin()" class="text-purple-500 font-semibold hover:underline">
-                        Prihlásiť sa
+                        Log in
                     </button>
                 </p>
             </div>
@@ -100,7 +105,7 @@
                         onclick="handleLogout()" 
                         class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg font-semibold transition"
                     >
-                        Odhlásenie
+                        Logout
                     </button>
                 </div>
             </div>
@@ -109,12 +114,22 @@
             <div style="display:flex; gap:12px; padding:12px; flex:1;">
                 <aside id="roomsPane" style="width:260px; background:#ffffff; border-radius:8px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06);">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <strong>Miestnosti</strong>
+                        <strong>Rooms</strong>
                         <button onclick="refreshRooms()" style="border:0;background:transparent;cursor:pointer;">⟳</button>
                     </div>
+                    <div style="margin-bottom:12px; padding:10px; border:1px solid #e5e7eb; border-radius:8px; background:#f8fafc;">
+                        <div style="font-size:12px; font-weight:600; color:#334155; margin-bottom:6px;">Direct chat by email</div>
+                        <input id="directEmailInput" type="email" placeholder="user@example.com" style="width:100%; padding:8px; border:1px solid #e5e7eb; border-radius:6px; margin-bottom:8px;">
+                        <button onclick="startDirectChat()" style="padding:8px 10px; background:#0f766e;color:#fff;border-radius:6px;border:0;cursor:pointer;width:100%">Open direct chat</button>
+                    </div>
                     <div style="margin-bottom:8px;">
-                        <input id="newRoomName" placeholder="Nová miestnosť" style="width:100%; padding:8px; border:1px solid #e5e7eb; border-radius:6px;">
-                        <div style="margin-top:8px;"><button class="" onclick="createRoom()" style="padding:8px 10px; background:#3b82f6;color:#fff;border-radius:6px;border:0;cursor:pointer;width:100%">Vytvoriť</button></div>
+                        <input id="newRoomName" placeholder="New room" style="width:100%; padding:8px; border:1px solid #e5e7eb; border-radius:6px;">
+                        <div style="margin-top:8px;"><button class="" onclick="createRoom()" style="padding:8px 10px; background:#3b82f6;color:#fff;border-radius:6px;border:0;cursor:pointer;width:100%">Create</button></div>
+                    </div>
+                    <div style="margin-bottom:12px; padding:10px; border:1px solid #e5e7eb; border-radius:8px; background:#f8fafc;">
+                        <div style="font-size:12px; font-weight:600; color:#334155; margin-bottom:6px;">Add user to current room</div>
+                        <input id="groupMemberEmailInput" type="email" placeholder="user@example.com" style="width:100%; padding:8px; border:1px solid #e5e7eb; border-radius:6px; margin-bottom:8px;">
+                        <button onclick="addUserToCurrentRoom()" style="padding:8px 10px; background:#7c3aed;color:#fff;border-radius:6px;border:0;cursor:pointer;width:100%">Add to room</button>
                     </div>
                     <div id="roomsList" style="display:flex; flex-direction:column; gap:6px; max-height:60vh; overflow:auto;"></div>
                 </aside>
@@ -124,8 +139,8 @@
 
                     <div style="background:#fff; border-top:1px solid #e5e7eb; padding:10px;">
                         <div style="display:flex; gap:8px;">
-                            <input id="messageInput" type="text" placeholder="Napíš správu..." style="flex:1;padding:10px;border:1px solid #e5e7eb;border-radius:6px;" onkeypress="if(event.key==='Enter') sendMessage()">
-                            <button onclick="sendMessage()" style="padding:10px 14px;background:#3b82f6;color:#fff;border-radius:6px;border:0;cursor:pointer">Odoslať</button>
+                            <input id="messageInput" type="text" placeholder="Type a message..." style="flex:1;padding:10px;border:1px solid #e5e7eb;border-radius:6px;" onkeypress="if(event.key==='Enter') sendMessage()">
+                            <button onclick="sendMessage()" style="padding:10px 14px;background:#3b82f6;color:#fff;border-radius:6px;border:0;cursor:pointer">Send</button>
                         </div>
                     </div>
                 </section>
@@ -137,8 +152,9 @@
     <script>
         let socket = null;
         let currentUser = null;
+        let currentRoomId = localStorage.getItem('currentRoomId');
 
-        // Quick-fill helper for test users
+        // Quick-fill helper for test users (login)
         function fillTestUser(email, password) {
             const emailInput = document.getElementById('loginEmail');
             const passInput = document.getElementById('loginPassword');
@@ -148,8 +164,24 @@
             if (passInput) passInput.focus();
         }
 
+        // Quick-fill helper for test users (register)
+        function fillTestRegister(email, displayName, password) {
+            const emailInput = document.getElementById('registerEmail');
+            const nameInput = document.getElementById('registerDisplayName');
+            const passInput = document.getElementById('registerPassword');
+            if (emailInput) emailInput.value = email;
+            if (nameInput) nameInput.value = displayName;
+            if (passInput) passInput.value = password;
+            // focus password for convenience
+            if (passInput) passInput.focus();
+        }
+
         function getDisplayName(user) {
-            return user?.display_name || user?.displayName || user?.email || 'Používateľ';
+            return user?.display_name || user?.displayName || user?.email || 'User';
+        }
+
+        function getUserEmail(user) {
+            return user?.email || 'unknown';
         }
 
         // Switch between login and register forms
@@ -184,7 +216,7 @@
             const password = document.getElementById('registerPassword').value;
 
             if (!email || !displayName || !password) {
-                showError('Vyplň všetky polia');
+                showError('Fill all fields');
                 return;
             }
 
@@ -199,7 +231,7 @@
                 const data = await response.json();
 
                 if (!response.ok) {
-                    showError(data.message || 'Chyba registrácie');
+                    showError(data.message || 'Registration error');
                     return;
                 }
 
@@ -207,7 +239,7 @@
                 localStorage.setItem('user', JSON.stringify(currentUser));
                 showChat();
             } catch (error) {
-                showError('Chyba pri registrácii: ' + error.message);
+                showError('Registration error: ' + error.message);
             }
         }
 
@@ -217,7 +249,7 @@
             const password = document.getElementById('loginPassword').value;
 
             if (!email || !password) {
-                showError('Vyplň email a heslo');
+                showError('Enter email and password');
                 return;
             }
 
@@ -232,7 +264,7 @@
                 const data = await response.json();
 
                 if (!response.ok) {
-                    showError(data.message || 'Nesprávne prihlasovacie údaje');
+                    showError(data.message || 'Invalid login credentials');
                     return;
                 }
 
@@ -240,7 +272,7 @@
                 localStorage.setItem('user', JSON.stringify(currentUser));
                 showChat();
             } catch (error) {
-                showError('Chyba pri prihlasovaní: ' + error.message);
+                showError('Login error: ' + error.message);
             }
         }
 
@@ -248,7 +280,7 @@
         function showChat() {
             document.getElementById('authContainer').classList.add('hidden');
             document.getElementById('chatContainer').classList.remove('hidden');
-            document.getElementById('userDisplay').textContent = `Prihlásený ako: ${getDisplayName(currentUser)}`;
+            document.getElementById('userDisplay').textContent = `Logged in as: ${getDisplayName(currentUser)}`;
             
             // Initialize socket connection and load rooms
             initializeSocket();
@@ -256,23 +288,46 @@
         }
 
         // Initialize Socket.IO
-        let currentRoomId = null;
         function initializeSocket() {
             socket = io();
 
             socket.on('connect', () => {
-                console.log('Pripojené k serveru');
+                console.log('Connected to server');
             });
 
-            // prijmi nové správy od ostatných
-            socket.on('message:new', (data) => {
-                if (data?.roomId === currentRoomId) {
-                    displayMessage(data.body || data, 'other');
+            // receive new messages (server may emit 'receive_message' or 'message:new')
+            const handleIncomingMessage = (data) => {
+                const roomId = data?.room_id || data?.roomId;
+                if (String(roomId) === String(currentRoomId)) {
+                    const sender = String(data.sender_id) === String(currentUser?.id) ? 'user' : 'other';
+                    displayMessage(data, sender);
+                }
+            };
+
+            socket.on('message:new', handleIncomingMessage);
+            socket.on('receive_message', handleIncomingMessage);
+
+            // message updated
+            socket.on('update_message', (data) => {
+                const messageId = data?.id || data?.message?.id || data?.messageId;
+                const el = document.querySelector(`[data-message-id=\"${messageId}\"]`);
+                if (el) {
+                    const bubble = el.querySelector('.message-bubble');
+                    if (bubble) bubble.textContent = data.body || data?.message?.body || '';
+                    const editedFlag = el.querySelector('.edited-flag');
+                    if (editedFlag) editedFlag.textContent = '(edited)';
                 }
             });
 
+            // message deleted
+            socket.on('delete_message', (data) => {
+                const messageId = data?.messageId || data?.id;
+                const el = document.querySelector(`[data-message-id=\"${messageId}\"]`);
+                if (el) el.remove();
+            });
+
             socket.on('disconnect', () => {
-                console.log('Odpojené od serveru');
+                console.log('Disconnected from server');
             });
         }
 
@@ -282,7 +337,7 @@
             const message = input.value.trim();
 
             if (!message) return;
-            if (!currentRoomId) { showError('Vyber miestnosť'); return; }
+            if (!currentRoomId) { showError('Select a room'); return; }
 
             // optimistic UI
             displayMessage(message, 'user');
@@ -292,22 +347,43 @@
             if (socket && socket.connected) {
                 socket.emit('message:send', { roomId: currentRoomId, body: message });
             } else {
-                showError('Nie si pripojený');
+                showError('You are not connected');
             }
         }
 
-        // Display message in chat
+        // Display message in chat. Accepts message object or string.
         function displayMessage(message, sender) {
             const container = document.getElementById('messagesContainer');
             const messageDiv = document.createElement('div');
             messageDiv.style.display = 'flex';
-            messageDiv.style.justifyContent = sender === 'user' ? 'flex-end' : 'flex-start';
+            messageDiv.style.flexDirection = 'column';
+            messageDiv.style.alignItems = sender === 'user' ? 'flex-end' : 'flex-start';
+
+            // message may be a string (optimistic) or object from server
+            const msgObj = typeof message === 'string' ? { body: message } : message || {};
+
+            // Timestamp
+            if (msgObj.created_at) {
+                const time = document.createElement('div');
+                time.style.fontSize = '12px';
+                time.style.color = '#9ca3af';
+                time.style.marginBottom = '4px';
+                const d = new Date(msgObj.created_at);
+                time.textContent = d.toLocaleString();
+                messageDiv.appendChild(time);
+            }
+
+            const row = document.createElement('div');
+            row.style.display = 'flex';
+            row.style.justifyContent = sender === 'user' ? 'flex-end' : 'flex-start';
 
             const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
             bubble.style.maxWidth = '70%';
             bubble.style.borderRadius = '12px';
-            bubble.style.padding = '8px 10px';
-            bubble.style.lineHeight = '1.3';
+            bubble.style.padding = '12px 16px';
+            bubble.style.lineHeight = '1.5';
+            bubble.style.fontSize = '15px';
             if (sender === 'user') {
                 bubble.style.background = '#3b82f6';
                 bubble.style.color = '#fff';
@@ -315,9 +391,60 @@
                 bubble.style.background = '#e5e7eb';
                 bubble.style.color = '#111827';
             }
-            bubble.textContent = typeof message === 'string' ? message : (message.body || JSON.stringify(message));
+            bubble.textContent = msgObj.body || '';
 
-            messageDiv.appendChild(bubble);
+            row.appendChild(bubble);
+
+            // If message has id and belongs to current user, add edit/delete controls
+            if (msgObj.id && String(msgObj.sender_id) === String(currentUser?.id)) {
+                messageDiv.setAttribute('data-message-id', msgObj.id);
+
+                const controls = document.createElement('div');
+                controls.style.display = 'flex';
+                controls.style.gap = '8px';
+                controls.style.alignItems = 'center';
+                controls.style.marginTop = '4px';
+                controls.style.justifyContent = sender === 'user' ? 'flex-end' : 'flex-start';
+
+                const editBtn = document.createElement('button');
+                editBtn.textContent = '✏️';
+                editBtn.style.fontSize = '14px';
+                editBtn.style.background = 'transparent';
+                editBtn.style.border = '0';
+                editBtn.style.cursor = 'pointer';
+                editBtn.title = 'Edit';
+                editBtn.onclick = () => startEditMessage(msgObj.id, bubble.textContent);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '🗑️';
+                deleteBtn.style.fontSize = '14px';
+                deleteBtn.style.background = 'transparent';
+                deleteBtn.style.border = '0';
+                deleteBtn.style.cursor = 'pointer';
+                deleteBtn.title = 'Delete';
+                deleteBtn.onclick = () => deleteMessage(msgObj.id);
+
+                const editedFlag = document.createElement('span');
+                editedFlag.className = 'edited-flag';
+                editedFlag.style.fontSize = '11px';
+                editedFlag.style.color = '#6b7280';
+                editedFlag.style.marginLeft = '6px';
+                if (msgObj.edited_at) editedFlag.textContent = '(edited)';
+
+                controls.appendChild(editBtn);
+                controls.appendChild(deleteBtn);
+                controls.appendChild(editedFlag);
+
+                messageDiv.appendChild(row);
+                messageDiv.appendChild(controls);
+            } else if (msgObj.id) {
+                // non-owned message, mark element for possible future updates
+                messageDiv.setAttribute('data-message-id', msgObj.id);
+                messageDiv.appendChild(row);
+            } else {
+                messageDiv.appendChild(row);
+            }
+
             container.appendChild(messageDiv);
             container.scrollTop = container.scrollHeight;
         }
@@ -330,9 +457,13 @@
                 const body = await res.json();
                 const rooms = body.data || body;
                 renderRooms(rooms || []);
+
+                if (currentRoomId && rooms.some(r => String(r.id) === String(currentRoomId))) {
+                    await loadRoomMessages(currentRoomId);
+                }
             } catch (err) {
                 console.error(err);
-                showError('Chyba načítania miestností');
+                showError('Failed to load rooms');
             }
         }
 
@@ -341,12 +472,17 @@
             list.innerHTML = '';
             rooms.forEach(r => {
                 const b = document.createElement('button');
-                b.textContent = r.name || `room:${r.id}`;
+                b.textContent = `${r.name || 'room'} (#${r.id})`;
                 b.style.padding = '8px';
                 b.style.textAlign = 'left';
                 b.style.border = '0';
                 b.style.background = 'transparent';
                 b.style.cursor = 'pointer';
+                b.style.borderRadius = '6px';
+                if (String(r.id) === String(currentRoomId)) {
+                    b.style.background = '#e0e7ff';
+                    b.style.fontWeight = '600';
+                }
                 b.onclick = () => selectRoom(r.id);
                 list.appendChild(b);
             });
@@ -354,25 +490,88 @@
 
         async function createRoom() {
             const name = document.getElementById('newRoomName').value.trim();
-            if (!name) { showError('Zadaj názov'); return; }
             try {
-                const res = await fetch('/api/v1/rooms', {
+                const res = await fetch('/api/v1/rooms?type=group', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, type: 'group' }),
+                    body: JSON.stringify({ name }),
                     credentials: 'include'
                 });
                 if (!res.ok) throw new Error('Create failed');
+                const body = await res.json();
+                const room = body.data || body;
                 document.getElementById('newRoomName').value = '';
-                refreshRooms();
+                if (room?.id) {
+                    currentRoomId = String(room.id);
+                    localStorage.setItem('currentRoomId', currentRoomId);
+                }
+                await refreshRooms();
+                if (room?.id) {
+                    await selectRoom(room.id);
+                }
             } catch (err) {
                 console.error(err);
-                showError('Nepodarilo sa vytvoriť miestnosť');
+                showError('Failed to create room');
+            }
+        }
+
+        async function startDirectChat() {
+            const email = document.getElementById('directEmailInput').value.trim();
+            if (!email) { showError('Enter email'); return; }
+
+            try {
+                const res = await fetch('/api/v1/rooms?type=direct', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                    credentials: 'include'
+                });
+
+                const body = await res.json();
+                const room = body.data || body;
+                if (room?.id) {
+                    currentRoomId = String(room.id);
+                    localStorage.setItem('currentRoomId', currentRoomId);
+                }
+                await refreshRooms();
+                if (room?.id) {
+                    await selectRoom(room.id);
+                }
+            } catch (err) {
+                console.error(err);
+                showError(err.message || 'Failed to open direct chat');
+            }
+        }
+
+        async function addUserToCurrentRoom() {
+            const email = document.getElementById('groupMemberEmailInput').value.trim();
+            if (!email) { showError('Enter email'); return; }
+            if (!currentRoomId) { showError('Select a room first'); return; }
+
+            try {
+                const res = await fetch(`/api/v1/rooms/${currentRoomId}/members/email`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, role: 'member' }),
+                    credentials: 'include'
+                });
+
+                const body = await res.json();
+                if (!res.ok) {
+                    throw new Error(body.message || 'Add member failed');
+                }
+
+                document.getElementById('groupMemberEmailInput').value = '';
+                console.log('Member added:', body.data || body);
+            } catch (err) {
+                console.error(err);
+                showError(err.message || 'Failed to add user to room');
             }
         }
 
         async function selectRoom(roomId) {
-            currentRoomId = roomId;
+            currentRoomId = String(roomId);
+            localStorage.setItem('currentRoomId', currentRoomId);
             if (socket && socket.connected) socket.emit('join_room', roomId);
             await loadRoomMessages(roomId);
         }
@@ -385,10 +584,11 @@
                 const msgs = body.data || body;
                 const container = document.getElementById('messagesContainer');
                 container.innerHTML = '';
-                (msgs || []).forEach(m => displayMessage(m.body || m, m.sender_id === currentUser?.id ? 'user' : 'other'));
+                // Backend returns newest-first (DESC). Reverse so we render oldest→newest.
+                (msgs || []).slice().reverse().forEach(m => displayMessage(m, String(m.sender_id) === String(currentUser?.id) ? 'user' : 'other'));
             } catch (err) {
                 console.error(err);
-                showError('Chyba načítania správ');
+                showError('Failed to load messages');
             }
         }
 
@@ -408,7 +608,95 @@
             document.getElementById('loginEmail').value = '';
             document.getElementById('loginPassword').value = '';
             localStorage.removeItem('user');
+            localStorage.removeItem('currentRoomId');
             switchToLogin();
+        }
+
+        // Start editing a message: replace bubble with input and save/cancel
+        function startEditMessage(messageId, currentText) {
+            const el = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (!el) return;
+            const bubble = el.querySelector('.message-bubble');
+            if (!bubble) return;
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentText;
+            input.style.padding = '8px';
+            input.style.border = '1px solid #e5e7eb';
+            input.style.borderRadius = '6px';
+            input.style.width = '60%';
+
+            const closeEditMode = () => {
+                input.remove();
+                saveBtn.remove();
+                cancelBtn.remove();
+                bubble.style.display = 'inline-block';
+            };
+
+            const saveBtn = document.createElement('button');
+            saveBtn.textContent = 'Save';
+            saveBtn.style.marginLeft = '8px';
+            saveBtn.style.padding = '6px 10px';
+            saveBtn.style.background = '#3b82f6';
+            saveBtn.style.color = '#fff';
+            saveBtn.style.border = '0';
+            saveBtn.style.borderRadius = '4px';
+            saveBtn.style.cursor = 'pointer';
+            saveBtn.onclick = async () => {
+                const newText = input.value.trim();
+                if (!newText) return;
+                try {
+                    const res = await fetch(`/api/v1/rooms/${currentRoomId}/messages/${messageId}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ body: newText }),
+                        credentials: 'include'
+                    });
+                    if (!res.ok) throw new Error('Update failed');
+                    const data = await res.json();
+                    bubble.textContent = data.data?.body || newText;
+                    const editedFlag = el.querySelector('.edited-flag');
+                    if (editedFlag) editedFlag.textContent = '(edited)';
+                } catch (err) {
+                    console.error(err);
+                    showError('Failed to update message');
+                } finally {
+                    // close edit mode regardless of success/error
+                    closeEditMode();
+                }
+            };
+
+            const cancelBtn = document.createElement('button');
+            cancelBtn.textContent = 'Cancel';
+            cancelBtn.style.marginLeft = '6px';
+            cancelBtn.style.padding = '6px 10px';
+            cancelBtn.style.background = '#e5e7eb';
+            cancelBtn.style.color = '#374151';
+            cancelBtn.style.border = '0';
+            cancelBtn.style.borderRadius = '4px';
+            cancelBtn.style.cursor = 'pointer';
+            cancelBtn.onclick = closeEditMode;
+
+            bubble.parentNode.insertBefore(input, bubble.nextSibling);
+            bubble.parentNode.insertBefore(saveBtn, input.nextSibling);
+            bubble.parentNode.insertBefore(cancelBtn, saveBtn.nextSibling);
+        }
+
+        async function deleteMessage(messageId) {
+            if (!confirm('Delete this message?')) return;
+            try {
+                const res = await fetch(`/api/v1/rooms/${currentRoomId}/messages/${messageId}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                if (!res.ok) throw new Error('Delete failed');
+                const el = document.querySelector(`[data-message-id="${messageId}"]`);
+                if (el) el.remove();
+            } catch (err) {
+                console.error(err);
+                showError('Failed to delete message');
+            }
         }
 
         // Check if user is already logged in
@@ -435,7 +723,7 @@
                     if (document.getElementById('chatContainer').classList.contains('hidden')) {
                         showChat();
                     } else {
-                        document.getElementById('userDisplay').textContent = `Prihlásený ako: ${getDisplayName(currentUser)}`;
+                        document.getElementById('userDisplay').textContent = `Signed in as: ${getDisplayName(currentUser)} (${getUserEmail(currentUser)})`;
                     }
                 }
             })

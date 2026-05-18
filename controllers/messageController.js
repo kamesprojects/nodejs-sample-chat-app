@@ -10,8 +10,11 @@ export const listRoomMessages = async (req, res, next) => {
   const { roomId } = req.params;
 
   try {
+    if (!roomId) {
+      return next(new AppError(400, "Room ID is required"));
+    }
     const messages = await Message.listUserRoomMessages(roomId, userId);
-    return sendSuccess(res, messages);
+    return sendSuccess(res, 200, messages);
   } catch (err) {
     next(err);
   }
@@ -26,7 +29,7 @@ export const getMessageByRoomId = async (req, res, next) => {
     if (!message) {
       return next(new AppError(404, "Message not found or access denied"));
     }
-    return sendSuccess(res, message);
+    return sendSuccess(res, 200, message);
   } catch (err) {
     next(err);
   }
@@ -47,14 +50,12 @@ export const createRoomMessage = async (req, res, next) => {
     const createdMessage = await Message.createRoomMessage(
       roomId,
       userId,
-      content,
+      body,
     );
 
     req.io.to(`room_${roomId}`).emit("receive_message", createdMessage);
 
-    return sendSuccess(res, 201, createdMessage, {
-      message: "Message created successfully",
-    });
+    return sendSuccess(res, 201, createdMessage, "Message created successfully");
   } catch (error) {
     console.error("Error inserting message:", error);
     next(new AppError(500, "Internal server error"));
@@ -80,9 +81,7 @@ export const updateRoomMessage = async (req, res, next) => {
 
     req.io.to(`room_${roomId}`).emit("update_message", updatedMessage);
 
-    return sendSuccess(res, 201, updatedMessage, {
-      message: "Message updated successfully",
-    });
+    return sendSuccess(res, 200, updatedMessage, "Message updated successfully");
   } catch (err) {
     next(err);
   }
@@ -102,7 +101,7 @@ export const deleteRoomMessage = async (req, res, next) => {
 
     req.io.to(`room_${roomId}`).emit("delete_message", { messageId });
 
-    return sendSuccess(res, { message: "Message deleted successfully" });
+    return sendSuccess(res, 200, { messageId }, "Message deleted successfully");
   } catch (err) {
     next(err);
   }
