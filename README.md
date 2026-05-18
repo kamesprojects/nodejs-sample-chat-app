@@ -1,13 +1,36 @@
 # Node.js Sample Chat App
 
-A simple real-time chat application built with Node.js, Express, Socket.IO, and PostgreSQL. The project is fully dockerized for easy database setup and includes Swagger documentation.
+![Chat App UI](public/images/UI.png)
+
+A real-time chat application built with **Node.js**, **Express**, **Socket.IO**, and **PostgreSQL**. Features JWT authentication via HTTP-only cookies, real-time messaging, direct chats, group rooms, and message editing/deletion.
+
+## What does it do?
+
+This chat application allows users to:
+- **Register & Login** with email and password
+- **Create group chat rooms** or start **direct chats** with other users by email
+- **Send, edit, and delete messages** in real-time
+- **Receive live updates** when new messages arrive, or when messages are edited/deleted
+- **Persistent message history** stored in PostgreSQL
+- **View timestamps** for each message
+- **Add members** to group rooms by email
+
+## Authentication & Security
+
+- **JWT Authentication**: Uses JSON Web Tokens (JWT) for user authentication
+- **HTTP-only Cookies**: Auth tokens are stored in HTTP-only cookies (secure, resistant to XSS attacks)
+- **Password Hashing**: Passwords are hashed using bcrypt
+- **CORS & Helmet**: API security middleware for cross-origin requests and HTTP headers
+- **Socket.IO Auth**: Real-time connections are verified via JWT token parsing
 
 ## Features
-- Real-time bidirectional communication using **Socket.IO**.
-- Persistent message storage in a **PostgreSQL** database.
-- Auto-generated API documentation using **Swagger**.
-- Basic security implementations using **Helmet** and **CORS**.
-- Containerized database setup using **Docker Compose**.
+- Real-time bidirectional communication using **Socket.IO**
+- Persistent message storage in **PostgreSQL** database
+- Edit and delete messages with live socket updates
+- Direct messaging and group rooms
+- Member management (add users by email)
+- Auto-generated API documentation using **Swagger**
+- Containerized database setup using **Docker Compose**
 
 ## Prerequisites
 Before you begin, ensure you have the following installed on your machine:
