@@ -126,28 +126,28 @@ curl -i http://localhost:3000/
 ### Enter PostgreSQL and run SQL
 
 ```bash
-docker compose exec postgres-db psql -U my_user -d my_db
-docker exec -it my_postgres_container_name psql -U my_user -d my_db
-docker compose exec postgres-db psql -U my_user -d my_db -c "SELECT NOW();"
-docker compose exec postgres-db psql -U my_user -d my_db -c "SELECT * FROM messages LIMIT 5;"
+docker compose exec postgres-db psql -U ${DB_USER} -d ${DB_NAME}
+docker exec -it my_postgres_container_name psql -U ${DB_USER} -d ${DB_NAME}
+docker compose exec postgres-db psql -U ${DB_USER} -d ${DB_NAME} -c "SELECT NOW();"
+docker compose exec postgres-db psql -U ${DB_USER} -d ${DB_NAME} -c "SELECT * FROM messages LIMIT 5;"
 ```
 
 Common `psql` flags:
 
 - `-h` = host. Use it when connecting from your machine, for example `-h localhost`.
-- `-p` = port. In this project the published port is `5431`.
-- `-U` = user. This comes from `.env`, for example `my_user`.
-- `-d` = database name. This also comes from `.env`, for example `my_db`.
+- `-p` = port. In this project the published port is ${DB_PORT}.
+- `-U` = user. This comes from `.env`, for example ${DB_USER}.
+- `-d` = database name. This also comes from `.env`, for example ${DB_NAME}.
 - `-c` = run one SQL command and exit.
 
 Example from your machine:
 
 ```bash
-psql -h localhost -p 5431 -U my_user -d my_db
-psql -h localhost -p 5431 -U my_user -d my_db -c "SELECT NOW();"
+psql -h localhost -p 5431 -U ${DB_USER} -d ${DB_NAME}
+psql -h localhost -p 5431 -U ${DB_USER} -d ${DB_NAME} -c "SELECT NOW();"
 ```
 
-If `psql` asks for a password, type the value from `.env`, which is `DB_PASSWORD=my_password`.
+If `psql` asks for a password, type the value from `.env`, which is `DB_PASSWORD`.
 
 How to exit `psql`:
 
@@ -167,7 +167,7 @@ Common `docker compose exec` / `docker exec` flags:
 If you prefer connecting from WSL or your host with a local `psql` client, use the published port from `.env`:
 
 ```bash
-psql -h localhost -p 5431 -U my_user -d my_db
+psql -h localhost -p 5431 -U ${DB_USER} -d ${DB_NAME}
 ```
 
 ### Reset the database volume
